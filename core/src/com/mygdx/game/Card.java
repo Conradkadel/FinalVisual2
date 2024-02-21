@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mygdx.game.Classes;
+package com.mygdx.game;
 
 /**
  *
@@ -14,11 +14,26 @@ public class Card {
     // Simple Card with a Suit and a Value
     // Image is provided by API
     
+    private String code;
+    
     private String image;
     
-    private int value;
+    private Image images;
+    
+    private String value;
     
     private String suit;
-    
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getSuit() {
+        return suit;
+    }
     
 }

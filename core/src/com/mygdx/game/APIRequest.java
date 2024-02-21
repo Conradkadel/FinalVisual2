@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mygdx.game.Classes;
+package com.mygdx.game;
 
 import com.badlogic.gdx.utils.Json;
-import com.mygdx.Classes.DrawCard;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -48,11 +47,11 @@ public class APIRequest {
         return respo;
     }
     
-    public static Card drawCard(int id){
+    public static Card getCard(String id){
         HttpResponse<String> response = null;
         HttpRequest request;
         request = HttpRequest.newBuilder()
-                .uri(URI.create("https://www.deckofcardsapi.com/api/deck/" + id + "/draw/?count=2"))
+                .uri(URI.create("https://www.deckofcardsapi.com/api/deck/" + id + "/draw/?count=1"))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
 		.build();
         try{
@@ -66,6 +65,8 @@ public class APIRequest {
         
         String myJsonData = response.body();
         DrawCard respo = json.fromJson(DrawCard.class,myJsonData);
-        return respo.cards[0];
+            return respo.getCards();
     }
+        
+   
 }
