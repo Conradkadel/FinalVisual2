@@ -14,43 +14,50 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+
 /**
  *
  * @author conradkadel
  */
-public class BlackJackScene extends Scene{
-    // This is my Blackjack Scene class which is used to display the window of 
-    // the blackjack game. Additionally will handle all inputs done by the user
-    // Singelton Use here to make sure we only have one instance of BlackJackScene
+public class HomeScreen extends Scene{
+    
     private Texture img;
-    private final BitmapFont font;
+    private BitmapFont font;
     private Skin mySkin;
     
+    public static HomeScreen scene;
     
-    
-    public static BlackJackScene scene;
-    
-    private BlackJackScene(){
-        
+    public HomeScreen(){
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
+        Gdx.input.setInputProcessor(stage);
+        mySkin = new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json"));
+        UIButton button1 = new UIButton(mySkin,1);
+        stage.addActor(button1.button);
+        Pixmap imgSmall = new Pixmap(Gdx.files.internal("casino.png"));
+        Pixmap imgBig = new Pixmap(1980, 1020, imgSmall.getFormat());
+        imgBig.drawPixmap(imgSmall,
+                0, 0, imgSmall.getWidth(), imgSmall.getHeight(),
+                0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        img = new Texture(imgBig);
+
         font = new BitmapFont();
-        font.setColor(Color.RED);      
-        
-    }
-    public void begin(){
-        BlackJack.start();
-     
-    }
+        font.setColor(Color.RED);
+}
+    @Override
     public void draw(){
+        stage.act();
         batch.begin();
-        font.draw(batch, "Working Stage 2", 200, 200);
+        batch.draw(img, 0, 0);
+    
+        
         batch.end();
+        stage.draw();
     }
     
-    public static BlackJackScene getOrMakeInstance(){
+    public static HomeScreen getOrMakeInstance(){
         if(scene == null){
-            scene = new BlackJackScene();
+            scene = new HomeScreen();
             return scene;
         }
         else{

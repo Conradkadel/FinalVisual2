@@ -40,7 +40,8 @@ public class BlackJack {
         if(dealer.getTotal() > 21){
             return false;
         }
-        return true;
+        else
+            return true;
     }
     
     

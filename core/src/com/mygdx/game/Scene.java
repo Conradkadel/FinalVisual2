@@ -4,12 +4,20 @@
  */
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
 /**
  *
  * @author conradkadel
  */
 public abstract class Scene {
     
+    protected Stage stage;
+    protected SpriteBatch batch;
+    
     public abstract void draw();
+    
+ 
     
 }
