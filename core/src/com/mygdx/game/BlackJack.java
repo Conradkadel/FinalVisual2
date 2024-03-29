@@ -43,7 +43,12 @@ public class BlackJack {
         else
             return true;
     }
-    
+    public static int getPlayerTotal(){
+        return player.getTotal();
+    }
+    public static int getDealerTotal(){
+        return dealer.getTotal();
+    }
     
     
     

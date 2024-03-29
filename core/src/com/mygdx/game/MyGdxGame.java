@@ -2,16 +2,23 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+
+
+// CASINO GAME
+// My goal with this project is to create a well working "Gambling" Application with the ability
+// to play BlackJack, Roulette or Baccarat
+// Using LibGDX for Graphics
+////// Time Table /////
+// -- Started 22 Febuary 
+// -- Getting Used to LibGDX and set everything up
+// -- Making my first Scene class and starting the structure of the Game
+// -- Creating Singeltons, Static and abstract classes, Globals
+// -- First Logic for BlackJack
+// -- Continue Working on BlackJack (User Interface and controlls
 
 public class MyGdxGame extends ApplicationAdapter {
     // MAIN CLASS OF GAME
@@ -22,51 +29,39 @@ public class MyGdxGame extends ApplicationAdapter {
     //
     //
 	
-	
+    private Globals globals;
   
-        private Globals globals;
-        private GameStates currentState;
-        
-        
-        
-        private String card= "";
-	
-	@Override
-	public void create () {
-                
-                globals = Globals.getOrMakeInstance();
-                currentState = globals.getGameState();
-                             
-                
-//                UIButton button2 = new UIButton(mySkin,2);
-//                UIButton button3 = new UIButton(mySkin,3);
-//                UIButton button4 = new UIButton(mySkin,4);
-                
-//                stage.addActor(button2.button);
-//                stage.addActor(button3.button);
-//                stage.addActor(button4.button);
-                	
-           
-	}
+    private BlackJackScene blackJackScene;
+    private HomeScreen homeScreenScene;
+    
+    @Override
+    public void create () {
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-       
-                if(globals.getGameState() == GameStates.MENU){
-                    HomeScreen homeScreenScene = HomeScreen.getOrMakeInstance();
-                    homeScreenScene.draw();
-                }
-                else if(globals.getGameState() == GameStates.BLACKJACK){
-                    BlackJackScene blackJackScene = BlackJackScene.getOrMakeInstance();
-                    blackJackScene.draw();
-                }
-                       
-                      
-	}
-	
-	@Override
-	public void dispose () {
-		
-	}
+            globals = Globals.getOrMakeInstance();
+                   	
+
+    }
+
+    @Override
+    public void render () {
+            ScreenUtils.clear(1, 0, 0, 1);
+          
+            if(globals.getGameState() == GameStates.MENU){
+                homeScreenScene = HomeScreen.getOrMakeInstance();
+                homeScreenScene.draw();
+            }
+            else if(globals.getGameState() == GameStates.BLACKJACK){
+                blackJackScene = BlackJackScene.getOrMakeInstance();
+                blackJackScene.draw();
+            }
+
+
+    }
+
+    @Override
+    public void dispose () {
+       blackJackScene.dispose();
+       homeScreenScene.dispose();
+        
+    }
 }

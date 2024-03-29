@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class BlackJackHand {
     
-    private ArrayList<Card> hand;
+    private ArrayList<Card> hand = new ArrayList<Card>();
     
     public BlackJackHand(){
         
@@ -24,9 +24,13 @@ public class BlackJackHand {
     
     public int getTotal(){
         int total = 0;
-        
-        for(Card c:hand){
-            total = Integer.parseInt(c.getValue()) + total;
+        if(hand != null){
+            for(Card c:hand){
+                if(c.getValue().equals("QUEEN") || c.getValue().equals("KING") || c.getValue().equals("ACE")||  c.getValue().equals("JACK") )
+                    total = 10 + total;
+                else
+                    total = Integer.parseInt(c.getValue()) + total;
+            }
         }
     return total;        
     }

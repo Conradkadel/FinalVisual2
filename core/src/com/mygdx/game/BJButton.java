@@ -9,36 +9,24 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 /**
  *
  * @author conradkadel
  */
-public class UIButton extends ImageButton{
+public class BJButton extends ImageButton {
     
     private final int row_height = Gdx.graphics.getWidth() / 12;
     private final int col_width = Gdx.graphics.getWidth() / 12;
     private final int width;
     private final int height;
     
-    public UIButton(Skin skin,int x,int y,GameStates State){
+    public BJButton(Skin skin,int x,int y){
         super(skin);
-        
-        this.width = 350;
-        this.height = 150;
+        this.width = col_width*2;
+        this.height = row_height;
         setSize(this.width,this.height);
         setPosition(x,y);
         
-        addListener(new InputListener(){
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-           Globals g = Globals.getOrMakeInstance();
-           g.changeCurrentGameState(State);
-            return true;
-        };
-        }); 
     }
-    
-   
-    
-    
 }

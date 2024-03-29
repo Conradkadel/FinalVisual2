@@ -18,6 +18,7 @@ public abstract class Scene {
     
     public abstract void draw();
     
+    public abstract void dispose();
  
     
 }
