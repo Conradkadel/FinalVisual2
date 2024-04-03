@@ -16,8 +16,9 @@ public abstract class Scene {
     protected Stage stage;
     protected SpriteBatch batch;
     
-    public abstract void draw();
-    
+    public abstract void draw(float deltaTime);
+    public abstract void update(float deltaTime);
+    public abstract Stage getStage();
     public abstract void dispose();
  
     

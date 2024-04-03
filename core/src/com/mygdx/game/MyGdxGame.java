@@ -2,9 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+
 
 
 
@@ -33,33 +37,50 @@ public class MyGdxGame extends ApplicationAdapter {
   
     private BlackJackScene blackJackScene;
     private HomeScreen homeScreenScene;
+    private Stage globalStage;
+    
+    
+    private float deltaTime;
     
     @Override
     public void create () {
 
             globals = Globals.getOrMakeInstance();
-                   	
-
+            homeScreenScene = HomeScreen.getOrMakeInstance();
+            blackJackScene = BlackJackScene.getOrMakeInstance();
+           
+            System.out.print("");
     }
 
+
     @Override
-    public void render () {
+    public void render() {
             ScreenUtils.clear(1, 0, 0, 1);
-          
-            if(globals.getGameState() == GameStates.MENU){
+            deltaTime = Gdx.graphics.getDeltaTime();
+            GameStates state = globals.getGameState();
+            
+            if(state == GameStates.MENU){
                 homeScreenScene = HomeScreen.getOrMakeInstance();
-                homeScreenScene.draw();
+                homeScreenScene.getStage().act(deltaTime);             
+                homeScreenScene.draw(deltaTime);
+                homeScreenScene.getStage().draw();
+                Gdx.input.setInputProcessor(homeScreenScene.getStage());
             }
-            else if(globals.getGameState() == GameStates.BLACKJACK){
+            else if(state == GameStates.BLACKJACK){
+               
                 blackJackScene = BlackJackScene.getOrMakeInstance();
-                blackJackScene.draw();
+                blackJackScene.getStage().act(deltaTime);
+                blackJackScene.draw(deltaTime);
+                blackJackScene.getStage().draw();
+                Gdx.input.setInputProcessor(blackJackScene.getStage());
             }
-
-
+            
+           System.out.print("State:" + state.name());
+           
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
        blackJackScene.dispose();
        homeScreenScene.dispose();
         

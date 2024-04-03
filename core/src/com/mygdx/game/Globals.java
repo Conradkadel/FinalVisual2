@@ -20,6 +20,7 @@ public class Globals {
     
     public void changeCurrentGameState(GameStates state){
         currentGameState = state;
+        
     }
     
     public GameStates getGameState(){
