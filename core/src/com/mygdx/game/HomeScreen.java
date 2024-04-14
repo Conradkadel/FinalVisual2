@@ -48,18 +48,14 @@ public class HomeScreen extends Scene{
         
         
 
-        UIButton button1 = new UIButton(mySkin,Gdx.graphics.getWidth() / 2 - 350,600,GameStates.BLACKJACK);
-        button1.setColor(Color.BLUE);
+        UIButton button1 = new UIButton(mySkin,200,450,GameStates.BLACKJACK,"BlackJackText.png");
+        button1.setColor(Color.ORANGE);
         button1.setName("BlackJack");
-        UIButton button2 = new UIButton(mySkin,Gdx.graphics.getWidth() / 2 - 350,200,GameStates.BLACKJACK);
+        UIButton button2 = new UIButton(mySkin,850,450,GameStates.BLACKJACK,"Roulette.png");
         button2.setName("Roulette");
-        button2.setColor(Color.RED);
-        UIButton button3 = new UIButton(mySkin,Gdx.graphics.getWidth() / 2 + 100,500,GameStates.BLACKJACK);
-        button3.setName("Spins");
-        button3.setColor(Color.GREEN);
-        UIButton button4 = new UIButton(mySkin,Gdx.graphics.getWidth() / 2 + 100,200,GameStates.BLACKJACK);
-        button4.setColor(Color.PURPLE);
-        button3.setName("Spins2");
+        button2.setColor(Color.ORANGE);
+        
+       
         
         Label blackJackLabel = new Label("Blackjack",labelStyle);
         blackJackLabel.setSize(150, 50);
@@ -68,38 +64,26 @@ public class HomeScreen extends Scene{
         
         Label roulettLable = new Label("Roulette",labelStyle);
         roulettLable.setSize(150, 50);
-         roulettLable.setName("RouletteLabel");
+        roulettLable.setName("RouletteLabel");
         roulettLable.setPosition(button2.getX(), button2.getY());
-        
-        Label baccarattLabel = new Label("Baccaratt",labelStyle);
-        baccarattLabel.setSize(150, 50);
-        baccarattLabel.setName("BaccarattLabel");
-        baccarattLabel.setPosition(button3.getX(), button4.getY());
+    
        
-        Label title = new Label("CASINO",labelStyle);
-        title.setName("TitleLabel");
-        title.setColor(Color.GOLD);
-        title.setSize(400,400);
-        title.setPosition(400, 600); 
+    
       
         
-        Pixmap imgSmall = new Pixmap(Gdx.files.internal("casino.png"));
-        Pixmap imgBig = new Pixmap(1980, 1020, imgSmall.getFormat());
-        imgBig.drawPixmap(imgSmall,
-                0, 0, imgSmall.getWidth(), imgSmall.getHeight(),
-                0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + 200);
-        img = new Texture(imgBig);
+        Pixmap imgSmall = new Pixmap(Gdx.files.internal("casinoBackround.png"));
+      
+        img = new Texture(imgSmall);
         
-        stage.addActor(title);
+    
         stage.addActor(button1);
         stage.addActor(button2);
-        stage.addActor(button3);
-        stage.addActor(button4);
+       
         
   
         stage.addActor(blackJackLabel);
         stage.addActor(roulettLable);
-        stage.addActor(baccarattLabel);
+       
         
           
         
@@ -112,6 +96,7 @@ public class HomeScreen extends Scene{
   
     @Override
     public void draw(float deltaTime){
+        Gdx.input.setInputProcessor(stage);
         stage.act(deltaTime);
         batch.begin();
         batch.draw(img, 0, 0);

@@ -24,6 +24,52 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 // -- First Logic for BlackJack
 // -- Continue Working on BlackJack (User Interface and controlls
 
+
+/*
+    Timetable of Work done on this Project:
+    This isnt always accurate as sometiemes its just minutes which is hard to record
+    Goal for this Project is 60 H +
+    
+    Started 22 Feb First Week 
+        - Getting Used to LibGDX and set everything up
+        - Making my first Scene class and starting the structure of the Game
+        - Creating Singeltons, Static and abstract classes, Globals
+
+    Second Week 29 Febuary 
+        - First Logic for BlackJack
+        - Continue Working on BlackJack (User Interface and controlls);
+        - Creating Buttons
+        - Looking at API and Connection
+    
+    Third Week 7 March
+        - Completed the API connection and created the sturcture for that
+        - Completion of all the classes needed
+        - Figuring out how to seperate Logic from display for blackjack but still making it connected
+
+    Fourth Week 14 March 
+        - Trying to display Blackjack and make it appear on screen
+        - Figuring our problems with logic that are occuring in blackjack
+    
+    Fifth Week 21 March - Spring Break
+    
+    Sixth Week 28 March - First Check IN
+
+         - Probelms with changings of Scenes and connection all Gamestates
+         - Continueing on Blackjack
+
+    Seventh Week 4 April 
+
+        - Loading Images from API and really starting to get Blackjack to work
+        - Figuring how to sepearte assets from logic...
+        - Working on Bugs
+        
+    Eigth Week 11 April
+
+        - Creating Visual Homescreen and working on Visuals making it look neat
+        - 
+
+*/
+
 public class MyGdxGame extends ApplicationAdapter {
     // MAIN CLASS OF GAME
     // This Class controlls the game application itself and it controlls
@@ -49,40 +95,41 @@ public class MyGdxGame extends ApplicationAdapter {
             homeScreenScene = HomeScreen.getOrMakeInstance();
             blackJackScene = BlackJackScene.getOrMakeInstance();
            
-            System.out.print("");
+            
     }
 
 
     @Override
     public void render() {
+            System.out.println("Running");
             ScreenUtils.clear(1, 0, 0, 1);
             deltaTime = Gdx.graphics.getDeltaTime();
             GameStates state = globals.getGameState();
             
             if(state == GameStates.MENU){
-                homeScreenScene = HomeScreen.getOrMakeInstance();
-                homeScreenScene.getStage().act(deltaTime);             
-                homeScreenScene.draw(deltaTime);
-                homeScreenScene.getStage().draw();
                 Gdx.input.setInputProcessor(homeScreenScene.getStage());
+                homeScreenScene = HomeScreen.getOrMakeInstance();
+                System.out.println("Running HomeSCreen");
+                homeScreenScene.draw(deltaTime);
+                
+                
             }
             else if(state == GameStates.BLACKJACK){
-               
-                blackJackScene = BlackJackScene.getOrMakeInstance();
-                blackJackScene.getStage().act(deltaTime);
-                blackJackScene.draw(deltaTime);
-                blackJackScene.getStage().draw();
                 Gdx.input.setInputProcessor(blackJackScene.getStage());
-            }
-            
-           System.out.print("State:" + state.name());
-           
+                blackJackScene = BlackJackScene.getOrMakeInstance();
+               System.out.println("Running BlackJack");
+                blackJackScene.draw(deltaTime);
+                
+            }            
+           System.out.println("Running Over");
     }
 
     @Override
     public void dispose() {
+       System.out.println("Running Over Fully");
        blackJackScene.dispose();
        homeScreenScene.dispose();
+       
         
     }
 }

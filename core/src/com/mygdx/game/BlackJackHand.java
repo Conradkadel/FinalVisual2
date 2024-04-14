@@ -13,13 +13,16 @@ import java.util.ArrayList;
 public class BlackJackHand {
     
     private ArrayList<Card> hand = new ArrayList<Card>();
-    
-    public BlackJackHand(){
-        
+    private String name;
+    public BlackJackHand(String name){
+        this.name = name;
     }
     
     public void giveCard(Card card){
         this.hand.add(card);
+    }
+    public String getName(){
+        return name;
     }
     
     public int getTotal(){
@@ -33,5 +36,9 @@ public class BlackJackHand {
             }
         }
     return total;        
+    }
+    
+    public ArrayList<Card> getCards(){
+        return hand;
     }
 }

@@ -4,6 +4,8 @@
  */
 package com.mygdx.game;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author conradkadel
@@ -11,16 +13,19 @@ package com.mygdx.game;
 public class BlackJack {
     
     private static Globals globals = Globals.getOrMakeInstance();
-    private static BlackJackHand player = new BlackJackHand();
-    private static BlackJackHand dealer = new BlackJackHand();
+    private static BlackJackHand player = new BlackJackHand("player");
+    private static BlackJackHand dealer = new BlackJackHand("dealer");
     private static Card hiddenCard;    
     private static Deck deck;
     private static String deckID;
     private static boolean dealerHit;
+    private static boolean started = false;
+    public static BlackJackHand lastWinner;
     
     public static void start(){ 
         deck = APIRequest.getNewDeck();
         deckID = deck.getDeck_id();
+        started = true;
         // Give the Cards out
         
         player.giveCard(APIRequest.getCard(deckID));
@@ -31,32 +36,32 @@ public class BlackJack {
     }
     
     public static boolean update(){
-        
-        if(dealerHit == false){
-            if(getPlayerTotal() == 21){
-                if(BlackJack.getPlayerTotal() == 21){
+        if(started == true){
+            if(dealerHit == false){
+                if(getPlayerTotal() == 21){
                     playerWins();
-                    return true;
-                   }
-            }
-        }
-        if(dealerHit == true){
-            if(getDealerTotal() > 16 && getDealerTotal() < 22){ 
-                if(BlackJack.getDealerTotal() < BlackJack.getPlayerTotal() || BlackJack.getDealerTotal() > 21){
-                    playerWins();
-                    return true;
-                }
-                else if(BlackJack.getDealerTotal() > BlackJack.getPlayerTotal() && BlackJack.getDealerTotal() > 15 && BlackJack.getDealerTotal() < 22){
-                    dealerWins();
                     return true;    
                 }
             }
-            else if(getDealerTotal() > 22){
-                playerWins();
-                return false;
-            }
-            else{
-                giveDealerCard();
+            if(dealerHit == true){
+                if(getDealerTotal() > 16 && getDealerTotal() < 22){ 
+                    if(BlackJack.getDealerTotal() < BlackJack.getPlayerTotal() || BlackJack.getDealerTotal() > 21){
+                        playerWins();
+                        return true;
+                    }
+                    else if(BlackJack.getDealerTotal() > BlackJack.getPlayerTotal() && BlackJack.getDealerTotal() > 15 && BlackJack.getDealerTotal() < 22){
+                        dealerWins();
+                        return true;    
+                    }
+                }
+                else if(getDealerTotal() > 22){
+                    playerWins();
+                    return true;
+                }
+                else{
+                    giveDealerCard();
+                    return false;
+                }
             }
         }
         return false;
@@ -68,8 +73,7 @@ public class BlackJack {
         
     }
     
-    public static boolean check(){
-       
+    public static boolean check(){ 
        if(dealer.getTotal() < 16){
            return true;
        }
@@ -101,22 +105,30 @@ public class BlackJack {
     }
     
     private static void reset(){
-        player = new BlackJackHand();
-        dealer = new BlackJackHand();
+        player = new BlackJackHand("player");
+        dealer = new BlackJackHand("dealer");
         dealerHit = false;
-        
+        started = false;
         // Give the Cards out
     }
     
+    public static ArrayList<Card> getPlayer() {
+            return player.getCards();
+        }
+
+    public static ArrayList<Card> getDealer() {
+        return dealer.getCards();
+    }
+    
     public static void playerWins(){
+        lastWinner = player;
         reset();
         
     }
     public static void dealerWins(){
+        lastWinner = dealer;
         reset();
         
     }
-    
-    
-    
+   
 }
