@@ -12,13 +12,13 @@ public class Card {
     // This is the Card class and is used in combination with mz API Request 
     // Class to load up Cards and Decks...
     // Simple Card with a Suit and a Value
-    // Image is provided by API
+    // ImageAPI is provided by API
     
     private String code;
     
     private String image;
     
-    private Image images;
+    private ImageAPI images;
     
     private String value;
     

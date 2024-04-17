@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import static com.mygdx.game.HomeScene.scene;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
@@ -54,7 +54,10 @@ public class BlackJackScene extends Scene{
     
     private float timeStamp;
     private Stage stage;
-    private Batch batch;
+    private SpriteBatch batch;
+    
+    private Chip currentSelection;
+    
     
     private BlackJackScene(){
         // Start the BlackJackLogic Scene and load in all assets
@@ -67,6 +70,8 @@ public class BlackJackScene extends Scene{
         LabelStyle labelStyle = new LabelStyle();
         labelStyle.font = font;
         labelStyle.fontColor = Color.BLACK;
+        
+ 
         
         playerTotal = new Label("Player Score: " + BlackJackLogic.getPlayerTotal(),labelStyle);
         playerTotal.setSize(Gdx.graphics.getWidth(), 50);
@@ -119,14 +124,7 @@ public class BlackJackScene extends Scene{
         img = new Texture(imgBig);
         
         homeButton = new UIButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),0,800,GameStates.MENU,"Menu.png");
-        homeButton.addListener(new InputListener(){
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-           Globals g = Globals.getOrMakeInstance();
-           g.changeCurrentGameState(GameStates.MENU);
-           
-            return true;
-        }});
+        
         homeButton.setSize(100, 65);
         labelOne = new Label("Player Wins !",labelStyle);
         labelOne.setName("labelOne");
@@ -186,6 +184,16 @@ public class BlackJackScene extends Scene{
             standButton.setVisible(true);
         }
         
+    }
+    
+    @Override
+    public Scene returnScene(){
+        return scene;
+    }
+    
+    @Override
+    public void setCurrentSelection(Chip c){
+        currentSelection = c;
     }
     
     private void drawCards(ArrayList<Card> cards,SpriteBatch thisBatch,int showX, int showY){

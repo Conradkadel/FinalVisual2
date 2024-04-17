@@ -8,7 +8,7 @@ package com.mygdx.game;
  *
  * @author conradkadel
  */
-public class Image {
+public class ImageAPI {
     // IMages class used for API resquest and handle pictures but is ultimatly not used
     
     private String svg;

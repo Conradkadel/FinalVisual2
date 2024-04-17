@@ -84,7 +84,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private RouletteScene rouletteScene;
     private Stage globalStage;
     
-    private HashMap<GameStates,Scene> list;
+    private HashMap<GameStates,Scene> list = new HashMap<GameStates,Scene>();
     
     private float deltaTime;
     
@@ -106,28 +106,9 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void render() {
             System.out.println("Running");
-            ScreenUtils.clear(1, 0, 0, 1);
-            deltaTime = Gdx.graphics.getDeltaTime();
-            GameStates state = globals.getGameState();
-            
-            list.get(state).draw(deltaTime);
-      
-            System.out.println("Running");
-//            if(state == GameStates.MENU){
-//                Gdx.input.setInputProcessor(homeScreenScene.getStage());
-//                homeScreenScene = HomeScene.getOrMakeInstance();
-//                System.out.println("Running HomeSCreen");
-//                homeScreenScene.draw(deltaTime);
-//                 
-//            }
-//            else if(state == GameStates.BLACKJACK){
-//                Gdx.input.setInputProcessor(blackJackScene.getStage());
-//                blackJackScene = BlackJackScene.getOrMakeInstance();
-//               System.out.println("Running BlackJack");
-//                blackJackScene.draw(deltaTime);
-//                
-//            }            
-           System.out.println("Running Over");
+            ScreenUtils.clear(1, 0, 0, 1);    
+            list.get(globals.getGameState()).draw(Gdx.graphics.getDeltaTime());
+            System.out.println("Running Over");
     }
 
     @Override
