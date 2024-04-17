@@ -2,11 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import java.util.HashMap;
 
 
 
@@ -82,9 +80,11 @@ public class MyGdxGame extends ApplicationAdapter {
     private Globals globals;
   
     private BlackJackScene blackJackScene;
-    private HomeScreen homeScreenScene;
+    private HomeScene homeScreenScene;
+    private RouletteScene rouletteScene;
     private Stage globalStage;
     
+    private HashMap<GameStates,Scene> list;
     
     private float deltaTime;
     
@@ -92,10 +92,14 @@ public class MyGdxGame extends ApplicationAdapter {
     public void create () {
 
             globals = Globals.getOrMakeInstance();
-            homeScreenScene = HomeScreen.getOrMakeInstance();
-            blackJackScene = BlackJackScene.getOrMakeInstance();
-           
             
+            homeScreenScene = HomeScene.getOrMakeInstance();
+            blackJackScene = BlackJackScene.getOrMakeInstance();
+            rouletteScene = RouletteScene.getOrMakeInstance();
+            
+            list.put(GameStates.ROULETTE, rouletteScene);
+            list.put(GameStates.BLACKJACK, blackJackScene);
+            list.put(GameStates.MENU, homeScreenScene);
     }
 
 
@@ -106,21 +110,23 @@ public class MyGdxGame extends ApplicationAdapter {
             deltaTime = Gdx.graphics.getDeltaTime();
             GameStates state = globals.getGameState();
             
-            if(state == GameStates.MENU){
-                Gdx.input.setInputProcessor(homeScreenScene.getStage());
-                homeScreenScene = HomeScreen.getOrMakeInstance();
-                System.out.println("Running HomeSCreen");
-                homeScreenScene.draw(deltaTime);
-                
-                
-            }
-            else if(state == GameStates.BLACKJACK){
-                Gdx.input.setInputProcessor(blackJackScene.getStage());
-                blackJackScene = BlackJackScene.getOrMakeInstance();
-               System.out.println("Running BlackJack");
-                blackJackScene.draw(deltaTime);
-                
-            }            
+            list.get(state).draw(deltaTime);
+      
+            System.out.println("Running");
+//            if(state == GameStates.MENU){
+//                Gdx.input.setInputProcessor(homeScreenScene.getStage());
+//                homeScreenScene = HomeScene.getOrMakeInstance();
+//                System.out.println("Running HomeSCreen");
+//                homeScreenScene.draw(deltaTime);
+//                 
+//            }
+//            else if(state == GameStates.BLACKJACK){
+//                Gdx.input.setInputProcessor(blackJackScene.getStage());
+//                blackJackScene = BlackJackScene.getOrMakeInstance();
+//               System.out.println("Running BlackJack");
+//                blackJackScene.draw(deltaTime);
+//                
+//            }            
            System.out.println("Running Over");
     }
 

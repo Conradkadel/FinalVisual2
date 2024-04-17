@@ -8,14 +8,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
@@ -23,18 +24,19 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  *
  * @author conradkadel
  */
-public class HomeScreen extends Scene{
-    // The HomeScreen Class which is extended from the abstact class Scene
+public class HomeScene extends Scene{
+    // The HomeScene Class which is extended from the abstact class Scene
     // THis Class will be used to display the home screen of the application
     // Also it will handle user input and event listerners
     // 4 Buttons that lead to other Games
-    
+    private Stage stage;
+    private Batch batch;
     private Texture img;
     private BitmapFont font;
     private Skin mySkin;
-    public static HomeScreen scene;
+    public static HomeScene scene;
     
-    private HomeScreen(){
+    private HomeScene(){
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
         mySkin = new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json"));
@@ -48,29 +50,31 @@ public class HomeScreen extends Scene{
         
         
 
-        UIButton button1 = new UIButton(mySkin,200,450,GameStates.BLACKJACK,"BlackJackText.png");
-        button1.setColor(Color.ORANGE);
-        button1.setName("BlackJack");
-        UIButton button2 = new UIButton(mySkin,850,450,GameStates.BLACKJACK,"Roulette.png");
-        button2.setName("Roulette");
+        
+        Skin mySkin2 = new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json"));
+        UIButton button2 = new UIButton(mySkin,850,450,GameStates.BLACKJACK,"BlackJackText.png");
         button2.setColor(Color.ORANGE);
+        button2.addListener(new InputListener(){
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+           Globals g = Globals.getOrMakeInstance();
+           g.changeCurrentGameState(GameStates.BLACKJACK);
+           
+            return true;
+        };
+        }); 
         
-       
-        
-        Label blackJackLabel = new Label("Blackjack",labelStyle);
-        blackJackLabel.setSize(150, 50);
-        blackJackLabel.setName("BlackJackLabel");
-        blackJackLabel.setPosition(button1.getX(), button1.getY());
-        
-        Label roulettLable = new Label("Roulette",labelStyle);
-        roulettLable.setSize(150, 50);
-        roulettLable.setName("RouletteLabel");
-        roulettLable.setPosition(button2.getX(), button2.getY());
-    
-       
-    
-      
-        
+        UIButton button1 = new UIButton(mySkin2,200,450,GameStates.BLACKJACK,"Roulette.png");
+        button1.addListener(new InputListener(){
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+           Globals g = Globals.getOrMakeInstance();
+           g.changeCurrentGameState(GameStates.ROULETTE);
+           
+            return true;
+        };
+        }); 
+
         Pixmap imgSmall = new Pixmap(Gdx.files.internal("casinoBackround.png"));
       
         img = new Texture(imgSmall);
@@ -78,14 +82,7 @@ public class HomeScreen extends Scene{
     
         stage.addActor(button1);
         stage.addActor(button2);
-       
-        
-  
-        stage.addActor(blackJackLabel);
-        stage.addActor(roulettLable);
-       
-        
-          
+
         
     }
    
@@ -121,10 +118,10 @@ public class HomeScreen extends Scene{
         return stage;
     }
     
-    public static HomeScreen getOrMakeInstance(){
+    public static HomeScene getOrMakeInstance(){
        
         if(scene == null){
-            scene = new HomeScreen();
+            scene = new HomeScene();
             return scene;
         }
         else{

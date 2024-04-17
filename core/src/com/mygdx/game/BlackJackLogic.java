@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author conradkadel
  */
-public class BlackJack {
+public class BlackJackLogic {
     
     private static Globals globals = Globals.getOrMakeInstance();
     private static BlackJackHand player = new BlackJackHand("player");
@@ -45,11 +45,11 @@ public class BlackJack {
             }
             if(dealerHit == true){
                 if(getDealerTotal() > 16 && getDealerTotal() < 22){ 
-                    if(BlackJack.getDealerTotal() < BlackJack.getPlayerTotal() || BlackJack.getDealerTotal() > 21){
+                    if(BlackJackLogic.getDealerTotal() < BlackJackLogic.getPlayerTotal() || BlackJackLogic.getDealerTotal() > 21){
                         playerWins();
                         return true;
                     }
-                    else if(BlackJack.getDealerTotal() > BlackJack.getPlayerTotal() && BlackJack.getDealerTotal() > 15 && BlackJack.getDealerTotal() < 22){
+                    else if(BlackJackLogic.getDealerTotal() > BlackJackLogic.getPlayerTotal() && BlackJackLogic.getDealerTotal() > 15 && BlackJackLogic.getDealerTotal() < 22){
                         dealerWins();
                         return true;    
                     }

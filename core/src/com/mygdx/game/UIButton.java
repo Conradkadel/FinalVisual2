@@ -32,18 +32,10 @@ public class UIButton extends ImageButton{
         this.height = 150;
         this.setSize(this.width,this.height);
         this.setPosition(x,y);
+        super.getStyle();
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(pictureUP))));
-        this.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(pictureUP))));
+        super.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(pictureUP))));
         
-        this.addListener(new InputListener(){
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-           Globals g = Globals.getOrMakeInstance();
-           g.changeCurrentGameState(State);
-           
-            return true;
-        };
-        }); 
     }
     
    

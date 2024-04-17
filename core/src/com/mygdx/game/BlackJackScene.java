@@ -8,9 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -53,10 +53,11 @@ public class BlackJackScene extends Scene{
     public static BlackJackScene scene; // Singelton Instance
     
     private float timeStamp;
-    
+    private Stage stage;
+    private Batch batch;
     
     private BlackJackScene(){
-        // Start the BlackJack Scene and load in all assets
+        // Start the BlackJackLogic Scene and load in all assets
         stage = new Stage(new ScreenViewport());
        
         batch = new SpriteBatch();
@@ -67,7 +68,7 @@ public class BlackJackScene extends Scene{
         labelStyle.font = font;
         labelStyle.fontColor = Color.BLACK;
         
-        playerTotal = new Label("Player Score: " + BlackJack.getPlayerTotal(),labelStyle);
+        playerTotal = new Label("Player Score: " + BlackJackLogic.getPlayerTotal(),labelStyle);
         playerTotal.setSize(Gdx.graphics.getWidth(), 50);
         playerTotal.setPosition(0, 450);
 
@@ -78,7 +79,7 @@ public class BlackJackScene extends Scene{
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             playing = true;
-            BlackJack.start();
+            BlackJackLogic.start();
             System.out.print("startButton Pressed ");
             return true;
         };
@@ -90,7 +91,7 @@ public class BlackJackScene extends Scene{
         hitButton.addListener(new InputListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            BlackJack.givePlayerCard();
+            BlackJackLogic.givePlayerCard();
             System.out.print("HitButton Pressed");
             timeStamp = Gdx.graphics.getDeltaTime();
             return true;
@@ -105,7 +106,7 @@ public class BlackJackScene extends Scene{
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             timeStamp = Gdx.graphics.getDeltaTime();
             dealerHit = true;
-            BlackJack.giveHiddenCard();
+            BlackJackLogic.giveHiddenCard();
             return true;
         };
         });
@@ -118,6 +119,14 @@ public class BlackJackScene extends Scene{
         img = new Texture(imgBig);
         
         homeButton = new UIButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),0,800,GameStates.MENU,"Menu.png");
+        homeButton.addListener(new InputListener(){
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+           Globals g = Globals.getOrMakeInstance();
+           g.changeCurrentGameState(GameStates.MENU);
+           
+            return true;
+        }});
         homeButton.setSize(100, 65);
         labelOne = new Label("Player Wins !",labelStyle);
         labelOne.setName("labelOne");
@@ -136,7 +145,7 @@ public class BlackJackScene extends Scene{
        
     }
     private void begin(){
-        BlackJack.start();
+        BlackJackLogic.start();
     }
     
     private boolean wait(float time){
@@ -154,13 +163,13 @@ public class BlackJackScene extends Scene{
     @Override
     public void update(float deltaTime){
         time += Gdx.graphics.getDeltaTime();
-        boolean check = BlackJack.update();
+        boolean check = BlackJackLogic.update();
         System.out.println("check =" + check);
         System.out.println("Playing =" + playing);
         if(check == true){ 
             playing = false;
             System.out.println("Check 2");
-            labelOne.setText(BlackJack.lastWinner.getName());
+            labelOne.setText(BlackJackLogic.lastWinner.getName());
             labelOne.setVisible(true);
             
             startButton.setVisible(true);
@@ -246,10 +255,10 @@ public class BlackJackScene extends Scene{
         else{
              // Bet has been Placed and plaing
            
-            drawCards(BlackJack.getDealer(),batch,400,200);
-            drawCards(BlackJack.getPlayer(),batch,400,600);
-            font.draw(batch,"Your Total :" + BlackJack.getPlayerTotal(),400,200);
-            font.draw(batch,"Dealer Total :" + BlackJack.getDealerTotal(),400,100);   
+            drawCards(BlackJackLogic.getDealer(),batch,400,200);
+            drawCards(BlackJackLogic.getPlayer(),batch,400,600);
+            font.draw(batch,"Your Total :" + BlackJackLogic.getPlayerTotal(),400,200);
+            font.draw(batch,"Dealer Total :" + BlackJackLogic.getDealerTotal(),400,100);   
         }
          
         stage.draw();
@@ -265,6 +274,7 @@ public class BlackJackScene extends Scene{
         
     }
     
+     
     public static BlackJackScene getOrMakeInstance(){
         if(scene == null){
             scene = new BlackJackScene();
