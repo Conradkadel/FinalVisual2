@@ -55,24 +55,20 @@ public class BlackJackScene extends Scene{
     private float timeStamp;
     private Stage stage;
     private SpriteBatch batch;
-    
-    private Chip currentSelection;
+    private static Chip currentSelection;
     
     
     private BlackJackScene(){
         // Start the BlackJackLogic Scene and load in all assets
         stage = new Stage(new ScreenViewport());
-       
+        
         batch = new SpriteBatch();
-        font = new BitmapFont();
-         
+        font = new BitmapFont();        
       
         LabelStyle labelStyle = new LabelStyle();
         labelStyle.font = font;
         labelStyle.fontColor = Color.BLACK;
-        
- 
-        
+
         playerTotal = new Label("Player Score: " + BlackJackLogic.getPlayerTotal(),labelStyle);
         playerTotal.setSize(Gdx.graphics.getWidth(), 50);
         playerTotal.setPosition(0, 450);
@@ -191,54 +187,15 @@ public class BlackJackScene extends Scene{
         return scene;
     }
     
-    @Override
-    public void setCurrentSelection(Chip c){
+    
+    public static void setCurrentSelection(Chip c){
         currentSelection = c;
     }
     
     private void drawCards(ArrayList<Card> cards,SpriteBatch thisBatch,int showX, int showY){
         int counter = 1;
         for(Card card:cards){
-            BufferedImage bufferedImage = null;
-            java.awt.Image scaleVersion;
-            Texture texture;
-            
-            try {
-                // ONLINE SOURCE AND HELP USED FOR THIS 
-                // Load image from URL
-                URL url = new URL(card.getImage());
-                bufferedImage = ImageIO.read(url);
-                scaleVersion = bufferedImage.getScaledInstance(75, 125, 1);
-                
-                // Create texture from BufferedImage
-                // Convert BufferedImage to Pixmap
-                Pixmap pixmap = new Pixmap(bufferedImage.getWidth(), bufferedImage.getHeight(), Pixmap.Format.RGBA8888);
-                for (int x = 0; x < bufferedImage.getWidth(); x++) {
-                for (int y = 0; y < bufferedImage.getHeight(); y++) {
-                    int argb = bufferedImage.getRGB(x, y);
-                    int rgba8888 = ((argb & 0xff000000) >>> 24) | // Alpha
-                                   ((argb & 0xff) << 16) |           // Red
-                                   ((argb & 0xff00)) |               // Green
-                                   ((argb & 0xff0000) >>> 16);       // Blue
-                    pixmap.drawPixel(x, y, rgba8888);
-                    }
-                }
-                Pixmap scalePixmap = new Pixmap(75, 125, pixmap.getFormat());
-                scalePixmap.drawPixmap(pixmap, 0, 0, pixmap.getWidth(), pixmap.getHeight(), 0, 0, 75, 125);
-                
-                
-                // Create texture from Pixmap
-                texture = new Texture(scalePixmap);
-                scalePixmap.dispose();
-                pixmap.dispose();
-                
-               
-            } catch (IOException e) {
-                e.printStackTrace();
-                texture = null;
-            }
-
-            thisBatch.draw(texture, showX * counter, showY);
+            thisBatch.draw(card.getImageTexture(), showX * counter, showY);
             counter++;
         }
     }

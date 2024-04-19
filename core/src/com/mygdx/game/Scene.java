@@ -19,7 +19,7 @@ public abstract class Scene {
     public abstract Stage getStage();
     public abstract void dispose();
     public abstract Scene returnScene();
-    public abstract void setCurrentSelection(Chip c);
+
  
     
 }

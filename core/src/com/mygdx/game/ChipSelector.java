@@ -24,23 +24,21 @@ public class ChipSelector extends ImageButton {
     private final int height;
     private Chip chip;
     
-    public ChipSelector(Skin skin,int x,int y, String picture,Chip chip,Scene scene){
+    public ChipSelector(Skin skin,int x,int y,Chip chip){
         super(skin);
-        this.width = 50;
-        this.height = 50;
+        this.width = 125;
+        this.height = 75;
         this.chip = chip;
         this.setVisible(true);
         this.setPosition(x, y);
         this.setColor(Color.RED);
-        this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(picture))));
-        this.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(picture))));
-
-        
+        this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(chip.getPictureString()))));
+        this.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(chip.getPictureString()))));
         this.addListener(new InputListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
            
-            scene.setCurrentSelection(chip);
+            RouletteScene.setCurrentSelection(chip);
            
             return true;
         }});
