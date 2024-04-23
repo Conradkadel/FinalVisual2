@@ -23,4 +23,5 @@ public class ImageActor extends Actor{
                 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + 200);
         img = new Texture(imgBig);
     }
+    
 }

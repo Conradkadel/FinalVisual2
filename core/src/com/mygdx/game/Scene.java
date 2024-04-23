@@ -15,7 +15,6 @@ public abstract class Scene {
     
     
     public abstract void draw(float deltaTime);
-    public abstract void update(float deltaTime);
     public abstract Stage getStage();
     public abstract void dispose();
     public abstract Scene returnScene();

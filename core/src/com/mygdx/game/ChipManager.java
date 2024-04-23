@@ -8,6 +8,7 @@ package com.mygdx.game;
  *
  * @author conradkadel
  */
-public interface Clickable {
-    public void clicked();
+public interface ChipManager {
+    public Chip getCurrentSelection();
+    public void setCurrentSelection(Chip c);
 }

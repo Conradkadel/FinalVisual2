@@ -105,10 +105,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void render() {
-            System.out.println("Running");
+            
             ScreenUtils.clear(1, 0, 0, 1);    
             list.get(globals.getGameState()).draw(Gdx.graphics.getDeltaTime());
-            System.out.println("Running Over");
+           
     }
 
     @Override

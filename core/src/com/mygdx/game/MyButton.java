@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  *
  * @author conradkadel
  */
-public class BJButton extends ImageButton {
+public class MyButton extends ImageButton {
     
     private final int row_height = Gdx.graphics.getWidth() / 12;
     private final int col_width = Gdx.graphics.getWidth() / 12;
@@ -24,7 +24,7 @@ public class BJButton extends ImageButton {
     private final int height;
 
    
-    public BJButton(Skin skin,int x,int y,String pictureUP){
+    public MyButton(Skin skin,int x,int y,String pictureUP){
         super(skin);
         this.width = col_width*2;
         this.height = row_height;

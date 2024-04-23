@@ -40,12 +40,12 @@ public class BlackJackScene extends Scene{
     private boolean dealerHit = false;
     
     private long time;
-    private BJButton startButton;
+    private MyButton startButton;
     private UIButton homeButton;
-    private BJButton hitButton;
-    private BJButton standButton;
-    private BJButton doubleDButton;
-    private BJButton splitButton;
+    private MyButton hitButton;
+    private MyButton standButton;
+    private MyButton doubleDButton;
+    private MyButton splitButton;
     private Label labelOne;
     private Label labelTwo;
     private Label playerTotal;
@@ -73,7 +73,7 @@ public class BlackJackScene extends Scene{
         playerTotal.setSize(Gdx.graphics.getWidth(), 50);
         playerTotal.setPosition(0, 450);
 
-        startButton = new BJButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),450,500,"Start.png");
+        startButton = new MyButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),450,500,"Start.png");
       
         startButton.setName("StartBUtton");
         startButton.addListener(new InputListener(){
@@ -86,7 +86,7 @@ public class BlackJackScene extends Scene{
         };
         });
         
-        hitButton = new BJButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),1000,700,"Hit.png");
+        hitButton = new MyButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),1000,700,"Hit.png");
         hitButton.setVisible(false);
         hitButton.setName("hitButton");
         hitButton.addListener(new InputListener(){
@@ -99,7 +99,7 @@ public class BlackJackScene extends Scene{
         };
         });
         
-        standButton = new BJButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),1000,400,"Stand.png");
+        standButton = new MyButton(new Skin(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/shade/skin/uiskin.json")),1000,400,"Stand.png");
         standButton.setVisible(false);
         standButton.setName("standButton");
         standButton.addListener(new InputListener(){
@@ -154,7 +154,6 @@ public class BlackJackScene extends Scene{
         return stage;
     }
     
-    @Override
     public void update(float deltaTime){
         time += Gdx.graphics.getDeltaTime();
         boolean check = BlackJackLogic.update();
@@ -186,7 +185,6 @@ public class BlackJackScene extends Scene{
     public Scene returnScene(){
         return scene;
     }
-    
     
     public static void setCurrentSelection(Chip c){
         currentSelection = c;
@@ -238,8 +236,7 @@ public class BlackJackScene extends Scene{
         System.out.println("CHECK 4");
         
     }
-    
-     
+      
     public static BlackJackScene getOrMakeInstance(){
         if(scene == null){
             scene = new BlackJackScene();
