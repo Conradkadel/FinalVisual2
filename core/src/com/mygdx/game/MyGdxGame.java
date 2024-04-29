@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.HashMap;
@@ -96,6 +97,10 @@ public class MyGdxGame extends ApplicationAdapter {
             homeScreenScene = HomeScene.getOrMakeInstance();
             blackJackScene = BlackJackScene.getOrMakeInstance();
             rouletteScene = RouletteScene.getOrMakeInstance();
+            
+           
+            
+            Player.giveMoney(100000);
             
             list.put(GameStates.ROULETTE, rouletteScene);
             list.put(GameStates.BLACKJACK, blackJackScene);

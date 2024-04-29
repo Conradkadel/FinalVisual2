@@ -106,6 +106,7 @@ public class BlackJackScene extends Scene{
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             timeStamp = Gdx.graphics.getDeltaTime();
+            System.out.print("StandButton Pressed");
             dealerHit = true;
             BlackJackLogic.giveHiddenCard();
             return true;
@@ -138,9 +139,7 @@ public class BlackJackScene extends Scene{
         
        
     }
-    private void begin(){
-        BlackJackLogic.start();
-    }
+
     
     private boolean wait(float time){
         if(Gdx.graphics.getDeltaTime() >= time){
@@ -192,6 +191,7 @@ public class BlackJackScene extends Scene{
     
     private void drawCards(ArrayList<Card> cards,SpriteBatch thisBatch,int showX, int showY){
         int counter = 1;
+        System.out.println("Cards Lenght :" + cards.size());
         for(Card card:cards){
             thisBatch.draw(card.getImageTexture(), showX * counter, showY);
             counter++;
@@ -204,7 +204,7 @@ public class BlackJackScene extends Scene{
         System.out.println("CHECK 1");
         Gdx.input.setInputProcessor(stage);
         update(deltaTime);
-        
+       
         stage.act(deltaTime);
         batch.begin();
         batch.draw(img, 0, 0);
@@ -217,7 +217,6 @@ public class BlackJackScene extends Scene{
         }
         else{
              // Bet has been Placed and plaing
-           
             drawCards(BlackJackLogic.getDealer(),batch,400,200);
             drawCards(BlackJackLogic.getPlayer(),batch,400,600);
             font.draw(batch,"Your Total :" + BlackJackLogic.getPlayerTotal(),400,200);

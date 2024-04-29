@@ -22,9 +22,8 @@ public class ChipSelector extends MyButton {
     private Chip chip;
     private ChipManager myScene;
       
-    public ChipSelector(Skin skin,int x,int y,Chip chip, ChipManager scene){
+    public ChipSelector(Skin skin,int x,int y,Chip chip){
         super(skin,x,y,chip.getPictureString());
-        this.myScene = scene;
         this.width = 125;
         this.height = 75;
         this.setSize(width, height);
@@ -34,7 +33,7 @@ public class ChipSelector extends MyButton {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             System.out.println("Running");
-            myScene.setCurrentSelection(chip);
+            RouletteScene.setCurrentSelection(chip);
            
             return true;
         }});

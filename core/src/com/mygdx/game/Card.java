@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
+
 /**
  *
  * @author conradkadel
@@ -62,9 +63,9 @@ public class Card {
             Pixmap scalePixmap = new Pixmap(75, 125, pixmap.getFormat());
             scalePixmap.drawPixmap(pixmap, 0, 0, pixmap.getWidth(), pixmap.getHeight(), 0, 0, 75, 125);
 
-
+          
             // Create texture from Pixmap
-            imageTexture = new Texture(scalePixmap);
+            imageTexture = new Texture(pixmap);
             scalePixmap.dispose();
             pixmap.dispose();
 
@@ -73,6 +74,7 @@ public class Card {
             e.printStackTrace();
             imageTexture = null;
         }
+            
         }
         
         return imageTexture;

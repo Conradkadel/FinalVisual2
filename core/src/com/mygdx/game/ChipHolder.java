@@ -5,13 +5,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
 
@@ -20,22 +20,23 @@ import java.util.ArrayList;
  * @author conradkadel
  */
 
-public class ChipHolder extends Actor{
+public class ChipHolder extends Actor {
+    
     private int printX;
     private int printY;
     private int width;
     private int height;
     private ArrayList<Chip> chipList;
-    private ChipManager myScene;
-    
+    private int[] winningNumbers;
+    private int value;
     BitmapFont font = new BitmapFont();
    
     Texture img;
     
-    public ChipHolder(int x,int y,int w,int h, ChipManager scene){
+    public ChipHolder(Skin skin,int x,int y,int w,int h, int[] numbers,int value){
         super();
-        this.myScene = scene;
-        
+        this.value = value;
+        this.winningNumbers = numbers;
         this.printX = x;
         this.printY = y;
         this.width = w;
@@ -47,22 +48,33 @@ public class ChipHolder extends Actor{
         imgBig.drawPixmap(imgSmall,
                 0, 0, imgSmall.getWidth(), imgSmall.getHeight(),
                 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + 200);
-        this.img = new Texture(imgBig);   
-        
-        this.addListener(new InputListener(){
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            if(myScene.getCurrentSelection() != null){
-                chipList.add(myScene.getCurrentSelection());
+        this.img = new Texture(imgBig); 
+        RouletteLogic.addToHolderList(this);
+    }
+   
+    
+    public boolean checkIfWon(int number){
+        for(int n: winningNumbers){
+            if(n == number){
+                return true;
             }
-            System.out.println("Running2");
-            return true;
-        }});
-        
-        
+        }
+        return false;
     }
     
-    public boolean hovering(){
+    public int returnWinnings(){
+        int pot = 0;
+        for(Chip c:chipList){
+            pot = pot + c.getValue();
+        }
+        return pot * value;
+    }
+    public void clearBet(){
+        this.chipList = new ArrayList<Chip>();
+    }
+   
+    
+    private boolean hovering(){
         if(Gdx.input.getX() > printX 
            && Gdx.input.getX() < (printX + width) 
            && Gdx.input.getY() + 35 > printY 
@@ -72,17 +84,31 @@ public class ChipHolder extends Actor{
         return false;
     }
     
-   @Override
+    @Override
     public void draw(Batch batch, float parentAlpha){
         font.draw(batch, "Working "+ "X :" + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 300, 600);
         if(hovering()){            
-            batch.draw(img,printX, 850 - printY); 
-            
+            batch.draw(img,printX, 850 - printY);     
         }
+        
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hovering()){
+          if( RouletteScene.getCurrentSelection() != null){
+            Chip c = RouletteScene.getCurrentSelection();
+            chipList.add(c);
+            Player.takeMoney(c.getValue());
+          }
+        }
+        
         if(!chipList.isEmpty()){
+            int i = 0;
+            int chipWidth = 50;
             for(Chip c: chipList){
-               
-                batch.draw(c.getPictureTexture(),printX,900 - printY);
+                if(printY >= 460)
+                    batch.draw(c.getPictureTexture(),printX + (this.width / 2 - chipWidth / 2) ,860 - printY - i * 5,50,50);
+                else
+                    batch.draw(c.getPictureTexture(),printX + (this.width / 2 - chipWidth / 2) ,880 - printY - i * 5,50,50);
+
+                i++;
             }
         }
     }
