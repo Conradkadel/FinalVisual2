@@ -2,8 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.HashMap;
 
@@ -69,38 +69,34 @@ import java.util.HashMap;
 
 */
 
-public class MyGdxGame extends ApplicationAdapter {
+public class Gullasino extends ApplicationAdapter {
     // MAIN CLASS OF GAME
     // This Class controlls the game application itself and it controlls
-    // 4 Game States
+    // 3 Game States
     // 1 - MAIN MENU
     // 2 - Blackjack
-    //
-    //
+    // 3 - Roulette
 	
     private Globals globals;
-  
     private BlackJackScene blackJackScene;
     private HomeScene homeScreenScene;
     private RouletteScene rouletteScene;
-    private Stage globalStage;
+    private HashMap<GameStates,Scene> list;
     
-    private HashMap<GameStates,Scene> list = new HashMap<GameStates,Scene>();
-    
-    private float deltaTime;
     
     @Override
     public void create () {
 
             globals = Globals.getOrMakeInstance();
-            
+            list = new HashMap<GameStates,Scene>();
             homeScreenScene = HomeScene.getOrMakeInstance();
             blackJackScene = BlackJackScene.getOrMakeInstance();
             rouletteScene = RouletteScene.getOrMakeInstance();
             
-           
+            Sound mainMusic = Gdx.audio.newSound(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/Sounds/mainSound.mp3"));
+            mainMusic.loop(0.1f);
             
-            Player.giveMoney(100000);
+            Player.giveMoney(10000);
             
             list.put(GameStates.ROULETTE, rouletteScene);
             list.put(GameStates.BLACKJACK, blackJackScene);
@@ -113,14 +109,19 @@ public class MyGdxGame extends ApplicationAdapter {
             
             ScreenUtils.clear(1, 0, 0, 1);    
             list.get(globals.getGameState()).draw(Gdx.graphics.getDeltaTime());
+            
+            if(Gdx.input.isKeyPressed(Input.Keys.O) && globals.getGameState() == GameStates.MENU){
+                    Gdx.app.exit();
+                }
            
     }
 
     @Override
     public void dispose() {
-       System.out.println("Running Over Fully");
+      
        blackJackScene.dispose();
        homeScreenScene.dispose();
+       
        
         
     }

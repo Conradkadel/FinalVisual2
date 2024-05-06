@@ -14,6 +14,8 @@ public class Player {
     
     private static int wins;
     
+    private static Chip currentSelection;
+    
     public static void giveMoney(int amount){
         money = money + amount;
     }
@@ -25,4 +27,10 @@ public class Player {
         return money;
     }
     
+    public static Chip getCurrentSelection() {
+        return currentSelection;
+    }
+    public static void setCurrentSelection(Chip c) {
+        currentSelection = c;
+    }
 }

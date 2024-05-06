@@ -5,6 +5,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -20,7 +21,7 @@ public class ChipSelector extends MyButton {
     private final int width;
     private final int height;
     private Chip chip;
-    private ChipManager myScene;
+    private Sound clickSound;
       
     public ChipSelector(Skin skin,int x,int y,Chip chip){
         super(skin,x,y,chip.getPictureString());
@@ -29,12 +30,12 @@ public class ChipSelector extends MyButton {
         this.setSize(width, height);
         this.setVisible(true);
         this.setColor(Color.RED);
+        this.clickSound = Gdx.audio.newSound(Gdx.files.internal("/Users/conradkadel/Desktop/Final Visual 2/assets/Sounds/pickUpChip.mp3"));
         this.addListener(new InputListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            System.out.println("Running");
-            RouletteScene.setCurrentSelection(chip);
-           
+            clickSound.play();
+            Player.setCurrentSelection(chip);           
             return true;
         }});
         

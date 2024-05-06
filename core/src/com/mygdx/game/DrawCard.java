@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class DrawCard {
     // This is a needed class for my API to handle the request to draw a card
     // as it doesnt only return the card itself 
+    
     private boolean success;
     
     private String deck_id;

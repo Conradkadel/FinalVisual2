@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
@@ -9,9 +10,12 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-                config.setResizable(false);
-		config.setTitle("FinalVisual2");
+                
+		config.setTitle("Gullasino");
                 config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-		new Lwjgl3Application(new MyGdxGame(), config);
+                config.setResizable(true);
+                
+             
+		new Lwjgl3Application(new Gullasino(), config);
 	}
 }

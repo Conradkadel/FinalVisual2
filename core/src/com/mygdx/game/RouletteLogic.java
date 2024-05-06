@@ -23,11 +23,27 @@ public class RouletteLogic {
         }
     }
     
-    public static void returnWinnings(int winningNumber){
+    public static void setActivated(boolean bool){
+        for(ChipHolder chipHolder: chipHoldersList){
+            chipHolder.acceptsBets(bool);
+        }
+    }
+    
+    public static void toggleWinner(int winningNumber){
+        for(ChipHolder cHolder: chipHoldersList){
+            if(cHolder.checkIfWon(winningNumber)){
+                cHolder.toggleVisible();
+            }
+        }
+    }
+    
+    public static void finishBet(int winningNumber){
         for(ChipHolder holder:chipHoldersList){
             if(holder.checkIfWon(winningNumber)){
                 Player.giveMoney(holder.returnWinnings());  
             }
+            RouletteLogic.setActivated(true);
         }
+        clearAllBets();
     }
 }

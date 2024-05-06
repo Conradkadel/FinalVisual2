@@ -12,8 +12,12 @@ import java.util.ArrayList;
  */
 public class BlackJackHand {
     
+    // BlackJack Hand that holds the cards and gets me information like total and handsize
+    
     private ArrayList<Card> hand = new ArrayList<Card>();
+    
     private String name;
+    
     public BlackJackHand(String name){
         this.name = name;
     }
@@ -24,15 +28,29 @@ public class BlackJackHand {
     public String getName(){
         return name;
     }
+    private int containsAce(){
+        int countAce = 0;
+        for(Card c:hand){
+            if(c.getValue().equals("ACE"))
+                countAce++;
+        }
+        return countAce;
+    }
     
     public int getTotal(){
         int total = 0;
         if(hand != null){
             for(Card c:hand){
-                if(c.getValue().equals("QUEEN") || c.getValue().equals("KING") || c.getValue().equals("ACE")||  c.getValue().equals("JACK") )
+                if(c.getValue().equals("QUEEN") || c.getValue().equals("KING") || c.getValue().equals("JACK"))
                     total = 10 + total;
+                else if(c.getValue().equals("ACE")){
+                    total = 11 + total;
+                }
                 else
-                    total = Integer.parseInt(c.getValue()) + total;
+                    total = Integer.parseInt(c.getValue()) + total;   
+            }
+            if(total > 21 && containsAce() != 0){
+                total = total - (containsAce()*10);
             }
         }
     return total;        
